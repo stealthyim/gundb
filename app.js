@@ -3,7 +3,7 @@ var port    = process.env.AWS_PORT || 6060;
 var express = require('express');
 
 var Gun = require('gun');
-var app    = express();
+var app = express();
 app.use(Gun.serve);
 app.use(express.static(__dirname));
 
@@ -21,3 +21,5 @@ var gun = Gun({
 });
 
 console.log('Server started on port ' + port + ' with /gun');
+
+module.exports = app;
