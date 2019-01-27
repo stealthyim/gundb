@@ -22,8 +22,6 @@ app.get('/', (req, res) => {
   res.send('HEY!')
 })
 
-global.Gun = Gun;
-
 console.log('Server started on port ' + port + ' with /gun');
 
 module.exports = app;
