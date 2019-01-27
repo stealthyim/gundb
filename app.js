@@ -1,12 +1,12 @@
 require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
-var port = 4080;
+//var port = 4080;
 var Gun = require('gun');
 var app    = express();
 app.use(Gun.serve);
 app.use(express.static(__dirname));
-var server = app.listen(port);
+var server = app.listen(80);
 var gun = Gun({
   file: 'data.json', // local testing and development,
   web: server,
@@ -20,6 +20,6 @@ var gun = Gun({
 
 global.Gun = Gun;
 
-console.log('Server started on port ' + port + ' with /gun');
+console.log('Server started on port 80 with /gun');
 
 module.exports = app;
