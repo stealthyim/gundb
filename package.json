@@ -3,22 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stealthyim/gundb.git"
-  },
-  "author": "Prabhaav Bhardwaj",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/stealthyim/gundb/issues"
-  },
-  "homepage": "https://github.com/stealthyim/gundb#readme",
   "dependencies": {
     "aws-sdk": "^2.395.0",
     "dotenv": "^6.2.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
     "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
     "gun": "^0.9.999998"
   }
 }
