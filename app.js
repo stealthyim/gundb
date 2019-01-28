@@ -3,7 +3,7 @@ require('dotenv').config();
 var express = require('express');
 var port = process.env.GUN_PORT || 5444;
 var Gun = require('gun');
-var app    = express();
+var app = express();
 
 app.use(Gun.serve);
 app.use(express.static(__dirname));
@@ -21,10 +21,7 @@ var gun = Gun({
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('RINGO STARR!')
-})
-
-console.log('Server started on port ' + port + ' with /gun');
+console.log('\n\n\n\n****************************************\n\n');
+console.log('GUNNNNNNNNNNN Server started on port ' + port + ' with /gun');
 
 module.exports = app;
