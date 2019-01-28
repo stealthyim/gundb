@@ -1,7 +1,7 @@
 require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
-var port = process.env.AWS_PORT || 6060;
+var port = process.env.PORT || 6060;
 var Gun = require('gun');
 var app    = express();
 app.use(Gun.serve);
