@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "aws-sdk": "^2.395.0",
     "dotenv": "^6.2.0",
     "express": "~4.16.0",
-    "gun": "^0.9.999998"
+    "gun": "^0.9.999999"
   }
 }
