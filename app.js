@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var express = require('express');
-var port = process.env.PORT || 3000;
+var port = process.env.GUN_PORT || 4040;
 var Gun = require('gun');
 var app    = express();
 
@@ -9,6 +9,8 @@ app.use(Gun.serve);
 app.use(express.static(__dirname));
 
 var server = app.listen(port);
+
+console.log('ENV VARS', process.env)
 
 var gun = Gun({
   file: 'data.json', // local testing and development,
@@ -22,7 +24,7 @@ var gun = Gun({
 });
 
 app.get('/', (req, res) => {
-  res.send('HEY!')
+  res.send('HOWDY!')
 })
 
 console.log('Server started on port ' + port + ' with /gun');
