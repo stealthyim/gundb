@@ -21,5 +21,7 @@ var gun = Gun({
   }
 });
 
+app.get('/', (req, res) => res.send('Hello World!'))
+
 console.log('\n\n\n\n****************************************\n\n');
-console.log('UGUN Server started on port ' + port + ' with /gun');
+console.log('GUN Server started on port ' + port + ' with /gun');
