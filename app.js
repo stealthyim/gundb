@@ -1,17 +1,50 @@
 require('dotenv').config();
 
-var express = require('express');
-var port = process.env.GUN_PORT || 5444;
-var Gun = require('gun');
+const port = process.env.GUN_PORT || 5444;
+const Gun = require('gun');
 
-var app = express();
-app.use(Gun.serve);
-app.use(express.static(__dirname));
+function hasValidToken (msg) {
+  return msg && msg && msg.headers && msg.headers.token && msg.headers.token === process.env.GUN_TOKEN
+}
 
-var server = app.listen(port);
+// Add listener
+Gun.on('opt', function (ctx) {
+  if (ctx.once) {
+    return
+  }
+  // Check all incoming traffic
+  ctx.on('in', function (msg) {
+    var to = this.to
+    // restrict put
+    if (msg.put) {
+      if (hasValidToken(msg)) {
+        console.log('writing')
+        to.next(msg)
+      } else {
+        console.log('not writing')
+      }
+    } else {
+      to.next(msg)
+    }
+  })
+})
 
-var gun = Gun({
-  file: 'data', // local testing and development,
+const server = require('http').createServer((req, res) => {
+  // filters gun requests!
+  if (Gun.serve(req, res)) {
+    return
+  }
+  require('fs').createReadStream(require('path').join(__dirname, req.url)).on('error', function () {
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.end(require('fs')
+      .readFileSync(require('path')
+        .join(__dirname, 'index.html')
+      ))
+  }).pipe(res)
+})
+
+const gun = Gun({
+  file: 'data.json', // local testing and development,
   web: server,
   s3: {
     key: process.env.AWS_ACCESS_KEY_ID, // AWS Access Key
@@ -21,7 +54,10 @@ var gun = Gun({
   }
 });
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// Sync everything
+gun.on('out', { get: { '#': { '*': '' } } })
 
-console.log('\n\n\n\n****************************************\n\n');
-console.log('GUN Server started on port ' + port + ' with /gun');
+server.listen(port)
+
+console.log('GUN server (restricted put) started on port: ' + port)
+console.log('Use CTRL + C to stop it')
